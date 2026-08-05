@@ -1,1 +1,82 @@
+"""
+summarize.py
 
+Uses the OpenAI API to summarize news articles.
+"""
+
+from openai import OpenAI
+
+from config import OPENAI_API_KEY
+from ai.prompts import SUMMARY_PROMPT
+
+client = OpenAI(api_key=OPENAI_API_KEY)
+
+
+def summarize_article(article):
+    """
+    Summarize a single article using OpenAI.
+    """
+
+    prompt = SUMMARY_PROMPT.format(
+        title=article["title"],
+        description=article["description"]
+    )
+
+    try:
+
+        response = client.chat.completions.create(
+
+            model="gpt-4.1-mini",
+
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert news summarizer."
+                },
+                {
+                    "role": "user",
+                    "content": prompt
+                }
+            ],
+
+            temperature=0.3,
+
+            max_tokens=200
+
+        )
+
+        summary = response.choices[0].message.content.strip()
+
+        return {
+            "title": article["title"],
+            "summary": summary,
+            "url": article["url"]
+        }
+
+    except Exception as e:
+
+        print(f"OpenAI Error: {e}")
+
+        return {
+            "title": article["title"],
+            "summary": article["description"],
+            "url": article["url"]
+        }
+
+
+def summarize_articles(articles):
+    """
+    Summarize all fetched articles.
+    """
+
+    summarized = []
+
+    for article in articles:
+
+        print(f"Summarizing: {article['title']}")
+
+        summarized.append(
+            summarize_article(article)
+        )
+
+    return summarized
