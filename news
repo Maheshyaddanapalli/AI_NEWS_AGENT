@@ -1,1 +1,16 @@
+"""
+news_sources.py
 
+Contains the supported news categories.
+"""
+
+NEWS_CATEGORIES = [
+    "technology",
+    "business",
+    "science",
+    "health"
+]
+
+COUNTRY = "us"
+
+PAGE_SIZE = 10
