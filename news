@@ -1,1 +1,32 @@
+"""
+clean_news.py
 
+Cleans the news articles received from the API.
+"""
+
+def clean_articles(articles):
+    """
+    Removes incomplete articles.
+
+    Returns:
+        list
+    """
+
+    cleaned = []
+
+    for article in articles:
+
+        title = article.get("title")
+        description = article.get("description")
+        url = article.get("url")
+
+        if not title or not description:
+            continue
+
+        cleaned.append({
+            "title": title.strip(),
+            "description": description.strip(),
+            "url": url
+        })
+
+    return cleaned
