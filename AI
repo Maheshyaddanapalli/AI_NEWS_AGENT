@@ -1,1 +1,27 @@
+"""
+prompts.py
 
+Contains the prompt used to summarize news articles.
+"""
+
+SUMMARY_PROMPT = """
+You are an expert news editor.
+
+Summarize the following news article.
+
+Requirements:
+
+1. Maximum 100 words.
+2. Use simple English.
+3. Mention the key points.
+4. Keep the summary factual.
+5. Do not add your own opinions.
+
+News Article:
+
+Title:
+{title}
+
+Description:
+{description}
+"""
